@@ -25,12 +25,12 @@
 
         function onKeyDown(event)
         {
-          if(event.key != word[0])
+          if(event.key != word[0] )
           {
                 text.fillColor = "red";
+                
                 responsiveVoice.speak(word[0],lang, {rate: 0.8, onend:function(){ 
                     responsiveVoice.speak("pas " + event.key, lang ,{rate: 0.8});
-
                  }});
           }
             
@@ -38,7 +38,7 @@
 
         function onKeyUp(event) {
             
-          if(event.key == word[0])
+          if(event.key == word[0] )
             {
                 text.fillColor = "green";
                 switch(word[0])
