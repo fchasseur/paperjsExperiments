@@ -9,9 +9,21 @@
 
 	<script type="text/paperscript" canvas="canvas">
 
-        var words = [ "alexandre", "bateau","casquette","dindon","extraordinaire","farandole","gigantesque","hélicoptère","isidore","journée","koala","limonade","moto","nananinanère","olala","pignouf", "quand est-ce qu'on mange","rateau","souris","turlututu","union","vélo","wagon","xylophone","yoda","zigoto","0 zéro sept","1 cheval","2 chevaux","3 mousquetaires","4 fantastiques","5 doigts de la main","6 fois 6 36","7 jours de la semaine","8 heures moins quart","9 à la coque"]; //'abcdefghijklmnopqrstuvwyz1234567890';
-        var word = words[0];
+        var words = [ "alexandre", "bateau","casquette","dindon","extraordinaire","farandole","gigantesque","hélicoptère","isidore","journée","koala","limonade","moto","nananinanère","olala","pignouf", "quand est-ce qu'on mange","rateau","souris","turlututu","théo","union","vélo","wagon","xylophone","yoda","zigoto","0 zéro sept","1 cheval","2 chevaux","3 mousquetaires","4 fantastiques","5 doigts de la main","6 fois 6 36","7 jours de la semaine","8 heures moins quart","9 à la coque"]; //'abcdefghijklmnopqrstuvwyz1234567890';
 
+    var items = getParameterByName("w");
+       if( items )
+        {
+            words = [];
+            items = items.split("!");
+            for (var i = items.length - 1; i >= 0; i--) {
+                words.push(items[i]);
+                console.log(items[i]);
+
+            }
+        } 
+        var word = words[0];
+        var remainingLetters = words.length;
         var lang = "French Female";
         var text = new PointText();
         
@@ -74,7 +86,15 @@
             if( counter == 0)
             {
                 //Change text
-                word = words[Math.floor((Math.random() *words.length))];
+                var id = Math.floor((Math.random()* remainingLetters)) ;
+                word = words[id];
+              
+                words.move(id, words.length-1);
+                remainingLetters -- ;
+                if( remainingLetters <= 0)
+                {
+                    remainingLetters = words.length ;
+                }
                 text.content = word[0].toUpperCase();
                 
                 if( isNaN(word[0])) 
@@ -102,6 +122,19 @@
                 
             }
         }
+        
+
+        Array.prototype.move = function(from, to) {
+        this.splice(to, 0, this.splice(from, 1)[0]);
+        };
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
 	</script>
 </head>
     <body>
